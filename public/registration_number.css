@@ -1,0 +1,12 @@
+li{
+  border-radius: 2em;
+border-color: black;
+height: 50px;
+width: 300px;
+background-color: yellow;
+font-size: 40px;
+margin-top: 0.5em;
+list-style: none;
+border-style: solid;
+text-align: center;
+}
