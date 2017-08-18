@@ -5,10 +5,19 @@
   <meta charset="utf-8">
   <title></title>
 </head>
+<h1>Registration Number</h1>
+
 <body>
+  <form class="entry" action="/reg_numbers" method="post">
+    <input type="text" name="regNum" placeholder="Please input registration number" required="">
+    <br></br>
+    <input type="submit" value="ADD" id="button">
+  </form>
   <form class="" action="/" method="post">
     <ul>
-        <li>{{output}}</li>
+      {{#each numberPlates}}
+        <li>{{this}}</li>
+      {{/each}}
     </ul>
   </form>
 </body>
