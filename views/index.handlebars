@@ -13,10 +13,25 @@
     <br></br>
     <input type="submit" value="ADD" id="button">
   </form>
-  <form class="" action="/" method="post">
+  <br></br>
+  <form class="" method="post" action="/filter">
+  <div class='radiobtn'>
+    <input type="radio" name="town" value="ma">Malmesbury
+    <input type="radio" name="town" value="cy">Bellville
+    <input type="radio" name="town" value="ca">Cape town
+  </div>
+  <br></br>
+  <input type="submit" value="SHOW" id="button">
+  </form>
+  <form class="" action="/filter" method="post">
     <ul>
       {{#each numberPlates}}
         <li>{{this}}</li>
+      {{/each}}
+    </ul>
+    <ul>
+      {{#each regPlates}}
+        <li>{{this.regNum}}</li>
       {{/each}}
     </ul>
   </form>
