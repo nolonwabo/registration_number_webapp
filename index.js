@@ -42,7 +42,6 @@ app.post('/reg_numbers', function(req, res) {
 });
 app.post('/filter', function(req, res) {
   var town = req.body.town;
-  console.log(town);
   model.storeRegNum.find({
     regNum: {
       '$regex': '.*' + town
