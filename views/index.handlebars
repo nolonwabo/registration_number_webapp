@@ -9,7 +9,7 @@
 
 <body>
   <form class="entry" action="/reg_numbers" method="post">
-    <input type="text" name="regNum" placeholder="Please input registration number" required="">
+    <input type="text" name="regNum" placeholder="Please input registration number" required="" pattern=".{9,9}" maxlength="9" >
     <br></br>
     <input type="submit" value="ADD" id="button">
   </form>
@@ -23,18 +23,34 @@
   <br></br>
   <input type="submit" value="SHOW" id="button">
   </form>
+  <br>
   <form class="" action="/filter" method="post">
-    <ul>
-      {{#each numberPlates}}
-        <li>{{this}}</li>
-      {{/each}}
-    </ul>
-    <ul>
-      {{#each regPlates}}
-        <li>{{this.regNum}}</li>
-      {{/each}}
-    </ul>
   </form>
+
+  <form class="" method="post" action="/all">
+    <input type="submit" value="SHOW ALL" id="btn">
+  </form>
+  <br>
+  <form class="" method="post" action="/reset">
+    <input type="submit" value="RESET" id="reset">
+  </form>
+  {{massege}}
+  {{display}}
+  <ul>
+    {{#each numberPlates}}
+    <li>{{this.regNum}}</li>
+    {{/each}}
+  </ul>
+  <ul>
+    {{#each regPlates}}
+    <li>{{this.regNum}}</li>
+    {{/each}}
+  </ul>
+  <ul>
+    {{#each allReg}}
+    <li>{{this.regNum}}</li>
+    {{/each}}
+  </ul>
 </body>
 
 </html>

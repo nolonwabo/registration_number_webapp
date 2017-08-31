@@ -19,28 +19,52 @@ app.get('/', function(req, res) {
   res.render('index', {});
 });
 
+
 var storeRegistration = [];
 app.post('/reg_numbers', function(req, res) {
   var regNum = req.body.regNum;
-  var storingRegPlates = new model.storeRegNum({
-    regNum: regNum
-  });
-  storeRegistration.push(regNum);
+  var massage = 'The registration already in use.';
+  model.storeRegNum.findOne({
+      regNum: regNum
+    },
+    function(err, platesStored) {
+      if (err) {
+        return (err);
+      } else if (platesStored) {
+        storeRegistration.push(platesStored);
+        platesStored = 1;
+        res.render('index', {
+          massege: massage
+        });
+      } else {
 
-  storingRegPlates.save(function(err) {
-    if (err) {
-      console.log('Error  Message: ' + err);
-    } else {
-      console.log('Save to database');
-      res.render('index', {
-        numberPlates: storeRegistration
-      });
-    }
-  });
+        if (!platesStored) {
+          var storingRegPlates = new model.storeRegNum({
+            regNum: regNum
+          });
+          storeRegistration.push(platesStored);
+          storingRegPlates.save(function(err, data) {
+            if (err) {
+              return err
+            }
+            model.storeRegNum.find({}, function(err, results) {
+              if (err) {
+                return err
+              }
+              res.render('index', {
+                numberPlates: results
+              });
 
+            })
+          })
+        }
+      }
+    })
 });
+
 app.post('/filter', function(req, res) {
   var town = req.body.town;
+  var output = "Please try again";
   model.storeRegNum.find({
     regNum: {
       '$regex': '.*' + town
@@ -55,7 +79,33 @@ app.post('/filter', function(req, res) {
       })
     }
   })
-})
+  // if (regNum === town) {
+  //   res.render('index',{display: output})
+  // }
+});
+
+app.post('/all', function(req, res) {
+  model.storeRegNum.find({}, function(err, all) {
+    if (err) {
+      return err;
+      console.log(err);
+    }
+    console.log(all);
+    res.render('index', {
+      allReg: all
+    })
+  })
+});
+
+app.post('/reset', function(req, res) {
+  model.storeRegNum.remove({}, function(err, remove) {
+    if (err) {
+      return err;
+    }
+    res.render('index')
+  })
+});
+
 var port = process.env.PORT || 3001
 var server = app.listen(port, function() {
   console.log("Started app on port : " + port)
